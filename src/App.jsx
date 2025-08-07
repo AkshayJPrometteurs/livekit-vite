@@ -10,7 +10,7 @@ const App = () => {
     useEffect(() => {
         const generateToken = async () => {
             try {
-                const response = await axios.get(import.meta.env.VITE_GET_TOKEN_URL);
+                const response = await axios.get(import.meta.env.VITE_GET_TOKEN_URL+'/get-token?room=testroom&identity=user123&name=user');
                 setToken(response.data.token);
             } catch (err) {
                 console.error('Error fetching token:', err);
