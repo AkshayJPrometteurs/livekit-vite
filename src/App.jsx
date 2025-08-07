@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LiveKitRoom, VideoConference } from '@livekit/components-react';
 import '@livekit/components-styles';
+import axios from 'axios';
 
 const App = () => {
     const [token, setToken] = useState(null);
@@ -9,15 +10,8 @@ const App = () => {
     useEffect(() => {
         const generateToken = async () => {
             try {
-                const response = await fetch(import.meta.env.VITE_GET_TOKEN_URL, {
-                    method: 'GET',
-                    headers: {'Content-Type': 'application/json'},
-                });
-
-                if (!response.ok) { throw new Error(`Failed to fetch token: ${response.status}`); }
-
-                const data = await response.json();
-                setToken(data.token);
+                const response = await axios.get(import.meta.env.VITE_GET_TOKEN_URL);
+                setToken(response.data.token);
             } catch (err) {
                 console.error('Error fetching token:', err);
                 setError(`Failed to get access token: ${err.message}`);
